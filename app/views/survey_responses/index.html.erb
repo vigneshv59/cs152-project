@@ -2,27 +2,26 @@
 
 <h1>Survey Responses</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Question1</th>
-      <th>Question2</th>
-      <th>Question3</th>
-      <th>Name</th>
-      <th colspan="3"></th>
+      <th> Name </th>
+
+      <% SurveyResponsesController::SURVEY_QUESTIONS.each do |q| %>
+        <th> <%= q[:short] %> </th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @survey_responses.each do |survey_response| %>
       <tr>
-        <td><%= survey_response.question1 %></td>
-        <td><%= survey_response.question2 %></td>
-        <td><%= survey_response.question3 %></td>
         <td><%= survey_response.name %></td>
-        <td><%= link_to 'Show', survey_response %></td>
-        <td><%= link_to 'Edit', edit_survey_response_path(survey_response) %></td>
-        <td><%= link_to 'Destroy', survey_response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
+          <% resp = [survey_response.question1,
+            survey_response.question2, survey_response.question3][i] %>
+          <td> <%= q[:choices][resp] %> </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

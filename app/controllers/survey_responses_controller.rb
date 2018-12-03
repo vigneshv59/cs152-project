@@ -1,6 +1,37 @@
 class SurveyResponsesController < ApplicationController
   before_action :set_survey_response, only: [:show, :edit, :update, :destroy]
 
+  SURVEY_QUESTIONS = [
+    { short: "Age",
+      long: "How old are you?",
+      choices: [
+        "18 and under",
+        "19",
+        "20",
+        "21",
+        "22+"
+      ]
+    },
+    { short: "Class",
+      long: "What is your Caltech graduation class?",
+      choices: [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ]
+    },
+    { short: "Q3",
+      long: "Question 3?",
+      choices: [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ]
+    }
+  ]
+
   # GET /survey_responses
   # GET /survey_responses.json
   def index

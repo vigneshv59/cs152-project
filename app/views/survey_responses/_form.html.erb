@@ -10,39 +10,55 @@
   </div>
 <% end %>
 
-<div class="field">
-  <%= form.label :question1 %>
-  <%= form.number_field :question1, id: :sr_q1 %>
+<div class="form-group">
+  <label for="name">Name</label>
+
+  <%= text_field_tag :name, nil, id: :name_text, class: 'form-control',
+  placeholder: "Your Name (or some other identifier)" %>
+
+  <small id="nameHelp" class="form-text text-muted">
+    This will not be randomized.
+  </small>
 </div>
 
-<div class="field">
-  <%= form.label :question2 %>
-  <%= form.number_field :question2, id: :sr_q2 %>
-</div>
+<% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
+  <div class="form-group">
+    <label for="question<%= i + 1 %>"><%= q[:long] %></label>
 
-<div class="field">
-  <%= form.label :question3 %>
-  <%= form.number_field :question3, id: :sr_q3 %>
-</div>
+    <%=
+      select_tag "q#{i + 1}", options_for_select(
+        q[:choices].map.with_index { |x, k| [x, k] }
+      ),
+      id: "q#{i + 1}_text",
+      class: 'form-control'
+    %>
 
-<div class="field">
-  <%= form.label :name %>
-  <%= form.text_field :name, id: :survey_response_name %>
-</div>
+    <small id="q<%= i + 1 %>Help" class="form-text text-muted">
+      This response will be randomized to protect privacy.
+    </small>
+  </div>
+<% end %>
 
-<%= form_with(model: survey_response, local: true, id: :survey_response_form)
-  do |form| %>
-  <%= form.hidden_field :question1 %>
-  <%= form.hidden_field :question2 %>
-  <%= form.hidden_field :question3 %>
+<%= form_with(model: survey_response, local: true, id: :survey_response_form) do |form| %>
+  <%= form.hidden_field :name, id: "name" %>
+  <%= form.hidden_field :question1, id: "q1" %>
+  <%= form.hidden_field :question2, id: "q2" %>
+  <%= form.hidden_field :question3, id: "q3" %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <script>
   $("#survey_response_form").on('submit', function() {
-    return false
+    $("#name").val($("#name_text").val())
+
+    for (var i = 1; i <= 3; i++) {
+      qtext = "q" + i
+      $("#" + qtext).val($("#" + qtext + "_text").val())
+    }
+
+    return true
   })
 </script>

@@ -1,5 +1,14 @@
-<h1>New Survey Response</h1>
+<br>
+
+<div class="card">
+  <div class="card-body">
+    These are a few questions that will be used to demonstrate the
+    basics of differential privacy. With the exception of the name field,
+    all the responses are locally randomized to respect (1, 0)-differential
+    privacy (and the notion of local privacy).
+  </div>
+</div>
+
+<br>
 
 <%= render 'form', survey_response: @survey_response %>
-
-<%= link_to 'Back', survey_responses_path %>

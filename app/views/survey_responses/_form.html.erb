@@ -45,4 +45,54 @@
   $("#survey_response_form").on('submit', function() {
     return false
   })
+  
+  function difpriv(num1){
+	// init epsilon to 1
+	var epsilon = 1; 
+	var num_of_entries = 5; // if changed stuff will break
+	  
+	// all possible return values
+	var incorrect_return_values = [0,1,2,3,4]; 
+	incorrect_return_values.splice( incorrect_return_values.indexOf(num1), 1 ); // remove num1
+	
+	var correct = Math.pow(Math.E,epsilon)/(Math.pow(Math.E,epsilon)+num_of_entries-1); // if y = v
+	var incorrect = 1/(Math.pow(Math.E,epsilon)+num_of_entries-1); // if y != v
+	
+	// Total sum of correct and incorrect probabilities
+	var total_prob = 4*incorrect + correct;
+	
+	// Get scaling factor to fit probabilities into [0,1]
+	scaling = 1/total_prob;
+	
+	// scale the incorrect prob
+	incorrect_prob = incorrect*scaling;
+	
+	// scale the correct prob
+	correct_prob = correct * scaling;
+	
+	// get random number in [0,1]
+	rand = Math.random();
+	
+	// output based on rand
+	if (rand <= incorrect_prob){	
+		return incorrect_return_values[0];
+	} 
+	else if (rand <= incorrect_prob*2){
+		return incorrect_return_values[1];
+	}
+	else if (rand <= incorrect_prob*3){
+		return incorrect_return_values[2];
+	}
+	else if (rand <= incorrect_prob*4){
+		return incorrect_return_values[3];
+	}
+	else if (rand <= incorrect_prob*4+correct_prob){
+		return num1;
+	}
+		
+	
+
+	  
+	  
+  }
 </script>

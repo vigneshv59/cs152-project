@@ -1,0 +1,48 @@
+<% if survey_response.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(survey_response.errors.count, "error") %> prohibited this survey_response from being saved:</h2>
+
+    <ul>
+    <% survey_response.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="field">
+  <%= form.label :question1 %>
+  <%= form.number_field :question1, id: :sr_q1 %>
+</div>
+
+<div class="field">
+  <%= form.label :question2 %>
+  <%= form.number_field :question2, id: :sr_q2 %>
+</div>
+
+<div class="field">
+  <%= form.label :question3 %>
+  <%= form.number_field :question3, id: :sr_q3 %>
+</div>
+
+<div class="field">
+  <%= form.label :name %>
+  <%= form.text_field :name, id: :survey_response_name %>
+</div>
+
+<%= form_with(model: survey_response, local: true, id: :survey_response_form)
+  do |form| %>
+  <%= form.hidden_field :question1 %>
+  <%= form.hidden_field :question2 %>
+  <%= form.hidden_field :question3 %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  $("#survey_response_form").on('submit', function() {
+    return false
+  })
+</script>

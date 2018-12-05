@@ -15,10 +15,10 @@ class SurveyResponsesController < ApplicationController
     { short: "Class",
       long: "What is your Caltech graduation class?",
       choices: [
+        "2019",
+        "2020",
         "2021",
-        "2022",
-        "2023",
-        "2024"
+        "2022"
       ]
     },
     { short: "Math",

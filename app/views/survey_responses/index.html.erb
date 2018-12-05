@@ -25,6 +25,17 @@
       </tr>
     <% end %>
   </tbody>
+
+  <tfoot>
+    <tr>
+      <td> <b> Median </b> </td>
+      <% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
+        <td>
+          <%= median(i + 1) %>
+        </td>
+      <% end %>
+    </tr>
+  </tfoot>
 </table>
 
 <br>

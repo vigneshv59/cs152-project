@@ -21,13 +21,14 @@ class SurveyResponsesController < ApplicationController
         "2024"
       ]
     },
-    { short: "Q3",
-      long: "Question 3?",
+    { short: "Math",
+      long: "What's 5 + 3?",
       choices: [
-        "2021",
-        "2022",
-        "2023",
-        "2024"
+        "2",
+        "4",
+        "6",
+        "8",
+        "10"
       ]
     }
   ]
@@ -59,7 +60,7 @@ class SurveyResponsesController < ApplicationController
 
     respond_to do |format|
       if @survey_response.save
-        format.html { redirect_to @survey_response, notice: 'Survey response was successfully created.' }
+        format.html { render html: "<br> Thanks for submitting a response!".html_safe, layout: "application", layout: true }
         format.json { render :show, status: :created, location: @survey_response }
       else
         format.html { render :new }

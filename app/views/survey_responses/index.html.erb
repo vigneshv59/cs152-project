@@ -25,19 +25,59 @@
       </tr>
     <% end %>
   </tbody>
-
-  <tfoot>
-    <tr>
-      <td> <b> Median </b> </td>
-      <% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
-        <td>
-          <%= median(i + 1) %>
-        </td>
-      <% end %>
-    </tr>
-  </tfoot>
 </table>
 
-<br>
+<div class="row">
+  <div class="col-md-4">
+    <canvas id="myChart0" height="300px"></canvas>
+  </div>
+  <div class="col-md-4">
+    <canvas id="myChart1" height="300px"></canvas>
+  </div>
+  <div class="col-md-4">
+    <canvas id="myChart2" height="300px"></canvas>
+  </div>
+</div>
 
-<%= link_to 'New Survey Response', new_survey_response_path %>
+<script>
+
+<% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
+var ctx<%= i %> = document.getElementById("myChart<%= i %>").getContext('2d');
+
+var myChart<%= i %> = new Chart(ctx<%= i %>, {
+    type: 'bar',
+    responsive: true,
+    data: {
+        labels: [<%= (q[:choices].collect { |c| "\"" + c + "\""}).join(",").html_safe %>],
+        datasets: [{
+            label: '<%= q[:short] %>',
+            data: <%= histogram(i + 1) %>,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+<% end %>
+</script>

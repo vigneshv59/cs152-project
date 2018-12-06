@@ -16,4 +16,17 @@ module SurveyResponsesHelper
     return l_descriptor if l == r
     return "Between #{l_descriptor} and #{r_descriptor}"
   end
+
+  def histogram(question)
+    choices = SurveyResponsesController::SURVEY_QUESTIONS[question - 1][:choices].length
+    hist = SurveyResponse.group("question#{question}").count
+
+    a = []
+
+    (0...choices).each do |i|
+      a[i] = hist[i] || 0
+    end
+
+    return a
+  end
 end

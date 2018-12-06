@@ -9,6 +9,7 @@
 
       <% SurveyResponsesController::SURVEY_QUESTIONS.each do |q| %>
         <th> <%= q[:short] %> </th>
+        <th> <%= q[:short] + " Raw" %> </th>
       <% end %>
     </tr>
   </thead>
@@ -20,7 +21,9 @@
         <% SurveyResponsesController::SURVEY_QUESTIONS.each_with_index do |q, i| %>
           <% resp = [survey_response.question1,
             survey_response.question2, survey_response.question3][i] %>
+          <% raw_resp = survey_response.send("raw_question#{i + 1}") %>
           <td> <%= q[:choices][resp] %> </td>
+          <td> <%= raw_resp.nil? ? "" : q[:choices][raw_resp] %> </td>
         <% end %>
       </tr>
     <% end %>

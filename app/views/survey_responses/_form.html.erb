@@ -44,6 +44,9 @@
   <%= form.hidden_field :question1, id: "q1" %>
   <%= form.hidden_field :question2, id: "q2" %>
   <%= form.hidden_field :question3, id: "q3" %>
+  <%= form.hidden_field :raw_question1, id: "raw_q1" %>
+  <%= form.hidden_field :raw_question2, id: "raw_q2" %>
+  <%= form.hidden_field :raw_question3, id: "raw_q3" %>
 
   <div class="actions">
     <%= form.submit "Submit", class: "btn btn-primary" %>
@@ -60,6 +63,7 @@
       var randomized = diffpriv(parseInt($("#" + qtext + "_text").val()), ocount)
 
       $("#" + qtext).val(randomized)
+      $("#raw_" + qtext).val(parseInt($("#" + qtext + "_text").val()))
     }
 
     return true
